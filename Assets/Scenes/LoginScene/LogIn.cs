@@ -15,7 +15,6 @@ public class LogIn : MonoBehaviour
     {
         if (login == pass.getText() && password == log.getText())
         {
-            Debug.Log("aaaaaaaa");
             SceneManager.LoadScene("AdministratorWindow");
         }
         else

@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-public class CreateUse : MonoBehaviour
+public class ChangeSceneToTheory : MonoBehaviour
 {
-    public void changeScene()
+    public void ChangeScene()
     {
-        SceneManager.LoadScene("CreateUser");
+        
     }
-     
 }
