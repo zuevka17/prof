@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class BackButton : MonoBehaviour
 {
-    [SerializeField] GameObject backButton;
-    private Animator anim;
+    [SerializeField] public GameObject Window;
+    [SerializeField] private Animator _windowToShow;
+    private Animator _windowToHide;
 
     void Start()
     {
-        anim = backButton.GetComponent<Animator>(); 
+        _windowToHide = Window.GetComponent<Animator>(); 
     }
 
     public void backButtonAnimation()
     {
-
+        _windowToShow.SetTrigger("Show");
+        _windowToHide.SetTrigger("Hide");
     }
-
-}
+ }

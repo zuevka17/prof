@@ -25,11 +25,11 @@ public class LogIn : MonoBehaviour
 
             if (Role == "User")
             {
-                _studentWindow.SetBool("IsUserWindow", true);
+                _studentWindow.SetTrigger("Show");
             }
             else if(Role == "Admin")
             {
-                _adminWindow.SetBool("IsAdminWindow", true);
+                _adminWindow.SetTrigger("Show");
             }
         }
         else
