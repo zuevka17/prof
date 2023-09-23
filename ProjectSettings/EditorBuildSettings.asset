@@ -6,33 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AdministratorScene/AdministratorWindow.unity
-    guid: 92ff535d622b11c4593cb543ffb1e4de
-  - enabled: 1
-    path: Assets/Scenes/CreateUser/CreateUser.unity
-    guid: dfe2aa6a9e88c2e4f8c7e361f0245673
-  - enabled: 1
-    path: Assets/Scenes/ExamTaskScene/ExamTask.unity
-    guid: 8f7ee815561ba724e9a9c8efd9ee5f7f
-  - enabled: 1
     path: Assets/Scenes/LoginScene/Login.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/RestultScene/Reuslt.unity
-    guid: 4bbe4e2a67431be47b348e5e48b4c805
-  - enabled: 1
-    path: Assets/Scenes/TeacherWindow/TeacherWindow.unity
-    guid: 25254e3dc6f9e3d4dbef8f749e680dc5
-  - enabled: 1
-    path: Assets/Scenes/AddTaskScene/AddTask.unity
-    guid: 03dd42fd52121c541b7e8bb235079bed
-  - enabled: 1
-    path: Assets/Scenes/TestTsksScene/TestTask.unity
-    guid: 2fba8db347c5edd47b597a6757a66ebf
-  - enabled: 1
-    path: Assets/Scenes/UsersWindow/UsersWindow.unity
-    guid: df87fcc5b1d4f684b84f88decc55d959
-  - enabled: 1
-    path: Assets/Scenes/VideosScene/Videos.unity
-    guid: ac8e6e629f8e2d74fadf0e7500be81f8
   m_configObjects: {}

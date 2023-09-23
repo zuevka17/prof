@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LogIn : MonoBehaviour
 {
@@ -13,13 +14,14 @@ public class LogIn : MonoBehaviour
     [SerializeField] private Animator _adminWindow;
     [SerializeField] private Animator _mainWindow;
     [SerializeField] private Animator _studentWindow;
+    [SerializeField] private Animator _teacherWindow;
 
-    [SerializeField] public GetCataFromInputField pass;
-    [SerializeField] public GetCataFromInputField log;   
+    [SerializeField] public TMP_InputField LoginInput;
+    [SerializeField] public TMP_InputField PasswordInput;   
 
     public void TryLogin()
     {
-        if (Login == pass.getText() && Password == log.getText())
+        if (Login == LoginInput.text && Password == PasswordInput.text)
         {
             _mainWindow.SetBool("IsHidden", true);
 
@@ -30,6 +32,10 @@ public class LogIn : MonoBehaviour
             else if(Role == "Admin")
             {
                 _adminWindow.SetTrigger("Show");
+            }
+            else if(Role == "Teacher")
+            {
+                _teacherWindow.SetTrigger("Show");
             }
         }
         else
