@@ -12867,15 +12867,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef588bdf0b530334aa4774cc1ea0d535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Login: admin
-  Password: admin
-  Role: Admin
+  _dataBaseConnection: {fileID: 508236356}
   _adminWindow: {fileID: 1093291166}
   _mainWindow: {fileID: 2040704720}
   _studentWindow: {fileID: 1717486285}
   _teacherWindow: {fileID: 1188971317}
-  LoginInput: {fileID: 1109613836}
-  PasswordInput: {fileID: 746930878}
+  _loginInput: {fileID: 1109613836}
+  _passwordInput: {fileID: 746930878}
 --- !u!1 &2055592736
 GameObject:
   m_ObjectHideFlags: 0

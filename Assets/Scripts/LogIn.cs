@@ -3,44 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Linq;
 
 public class LogIn : MonoBehaviour
 {
-    [SerializeField] public string Login;
-    [SerializeField] public string Password;
-    [SerializeField] public string Role;
+    [Header("DataBase Connect")]
+    [SerializeField] private DbConnect _dataBaseConnection;
 
-
+    [Header("Animator components")]
     [SerializeField] private Animator _adminWindow;
     [SerializeField] private Animator _mainWindow;
     [SerializeField] private Animator _studentWindow;
     [SerializeField] private Animator _teacherWindow;
 
-    [SerializeField] public TMP_InputField LoginInput;
-    [SerializeField] public TMP_InputField PasswordInput;   
+    [Header("Input field components")]
+    [SerializeField] private TMP_InputField _loginInput;
+    [SerializeField] private TMP_InputField _passwordInput;  
 
     public void TryLogin()
     {
-        if (Login == LoginInput.text && Password == PasswordInput.text)
+        DbConnect.User user = _dataBaseConnection.users.Where(u => u.Login == _loginInput.text && u.Password == _passwordInput.text).FirstOrDefault();
+        
+        if (user == null)
         {
-            _mainWindow.SetBool("IsHidden", true);
-
-            if (Role == "User")
-            {
-                _studentWindow.SetTrigger("Show");
-            }
-            else if(Role == "Admin")
-            {
-                _adminWindow.SetTrigger("Show");
-            }
-            else if(Role == "Teacher")
-            {
-                _teacherWindow.SetTrigger("Show");
-            }
+            Debug.Log("Неверно введен логин или пароль!");
         }
         else
         {
-            Debug.Log("Неверно введен логин/пароль");
+            if (user.Role == "User")
+            {
+                _studentWindow.SetTrigger("Show");
+            }
+            else if(user.Role == "Admin")
+            {
+                _adminWindow.SetTrigger("Show");
+            }
+            else if(user.Role == "Teacher")
+            {
+                _teacherWindow.SetTrigger("Show");
+            }
+            _mainWindow.SetBool("IsHidden", true);
         }
     }
 }

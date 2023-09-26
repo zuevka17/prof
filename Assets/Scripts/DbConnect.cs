@@ -9,7 +9,7 @@ public class DbConnect : MonoBehaviour
 {
     string con = @"server=192.168.0.1\SQLEXPRESS;user=is51_0;password=12345678Aa;trusted_connection=false;TrustServerCertificate=true;database=Unity";
 
-    List<User> users = new List<User>();
+    public List<User> users = new List<User>();
 
     void Start()
     {
@@ -44,11 +44,8 @@ public class DbConnect : MonoBehaviour
                             if (!reader.IsDBNull(0) & !reader.IsDBNull(1) & !reader.IsDBNull(2) & !reader.IsDBNull(3))
                             {
                                 string userLogin = reader.GetString(1);
-                                Debug.Log(userLogin);
                                 string userPassword = reader.GetString(2);
-                                Debug.Log(userPassword);
                                 string userRole = reader.GetString(3);
-                                Debug.Log(userRole);
 
                                 User user = new User(userLogin, userPassword, userRole);
                                 users.Add(user);
@@ -64,6 +61,7 @@ public class DbConnect : MonoBehaviour
         }
         return users;
     }
+
     public class User
     {
         public string Login { get; set; }
