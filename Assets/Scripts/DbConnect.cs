@@ -9,7 +9,7 @@ using TMPro;
 
 public class DbConnect : MonoBehaviour
 {
-    string con = @"server=192.168.0.1\SQLEXPRESS;user=is51_0;password=12345678Aa;trusted_connection=false;TrustServerCertificate=true;database=Unity";
+    private string con = @"server=192.168.0.1\SQLEXPRESS;user=is51_0;password=12345678Aa;trusted_connection=false;TrustServerCertificate=true;database=Unity";
 
     public List<User> users = new List<User>();
 
@@ -23,19 +23,10 @@ public class DbConnect : MonoBehaviour
         users = ConnectToDB();
     }
 
-    void OnGUI()
-    {
-        int i = 0;
-        foreach (User user in users)
-        {
-            Rect position = new Rect(i * 20, i * 20, 100, 20);
-            GUI.Label(position, user.Login);
-            i++;
-        }
-    }
-
     List<User> ConnectToDB()
     {
+        users.Clear();
+
         try
         {
             using (SqlConnection connection = new SqlConnection(con))
@@ -90,7 +81,9 @@ public class DbConnect : MonoBehaviour
                         Debug.Log("Row inserted!!");
                     else
                         Debug.Log("No row inserted");
-                }
+
+                    connection.Close();
+;                }
             }
         }
         catch (SqlException e)

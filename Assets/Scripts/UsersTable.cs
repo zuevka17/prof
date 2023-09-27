@@ -14,13 +14,16 @@ public class UsersTable : MonoBehaviour
 
     public void UpdateInfo()
     {
+        _loginField.text = "";
+        _roleField.text = "";
+
         foreach (var item in _dataBaseConnection.users)
         {
             _loginField.text += $"{item.Login}\n";
-            _roleField.text += $"{item.Role}\n";
+            _roleField.text  += $"{item.Role}\n";
         }
     }
-    void Start ()
+    void Start()
     {
         UpdateInfo();
     }
