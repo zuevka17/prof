@@ -6,8 +6,13 @@ using UnityEngine.UI;
 
 public class DragBlockSchemeComponent : MonoBehaviour
 {
-    [SerializeField]
     private Canvas canvas;
+
+    void Start()
+    {
+        GameObject tempObject = GameObject.Find("Canvas");
+        canvas = tempObject.GetComponent<Canvas>();
+    }
     public void DragHandler(BaseEventData data)
     {
         PointerEventData pointerData = (PointerEventData)data;

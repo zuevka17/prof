@@ -42,6 +42,7 @@ public class LogIn : MonoBehaviour
             {
                 _teacherWindow.SetTrigger("Show");
             }
+            _dataBaseConnection.currentUser = user;
             _mainWindow.SetBool("IsHidden", true);
         }
     }

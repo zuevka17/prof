@@ -18,6 +18,9 @@ public class DbConnect : MonoBehaviour
     [SerializeField] private TMP_InputField _password;
     [SerializeField] private TMP_Dropdown _selectRole;
 
+    [Header("Watched video fields")]
+    public User currentUser;
+
     void Start()
     {
         users = ConnectToDB();
@@ -42,11 +45,12 @@ public class DbConnect : MonoBehaviour
                         {
                             if (!reader.IsDBNull(0) & !reader.IsDBNull(1) & !reader.IsDBNull(2) & !reader.IsDBNull(3))
                             {
+                                int id = (int)reader.GetValue(0);
                                 string userLogin = reader.GetString(1);
                                 string userPassword = reader.GetString(2);
                                 string userRole = reader.GetString(3);
 
-                                User user = new User(userLogin, userPassword, userRole);
+                                User user = new User(id, userLogin, userPassword, userRole);
                                 users.Add(user);
                             }
                         }
@@ -93,14 +97,46 @@ public class DbConnect : MonoBehaviour
         Start();
     }
 
+    public void CreateUserWatchedVideos(int videoId)
+    {
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                Debug.Log("Inserting data into database...");
+                string SqlCom = "INSERT INTO Unity.dbo.WatchedVideos (user_id, video_id)\r\nVALUES(@userid, @videoid)";
+                using (SqlCommand command = new SqlCommand(SqlCom, connection))
+                {
+                    command.Parameters.Add("@userid", SqlDbType.Int).Value = currentUser.Id;
+                    command.Parameters.Add("@videoid", SqlDbType.Int).Value = videoId;
+
+                    int rowsAdded = command.ExecuteNonQuery();
+                    if (rowsAdded > 0)
+                        Debug.Log("Row inserted!!");
+                    else
+                        Debug.Log("No row inserted");
+
+                    connection.Close();
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Debug.Log(e.ToString());
+        }
+    }
+
     public class User
     {
+        public int Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
 
-        public User(string Login, string Password, string Role)
+        public User(int Id, string Login, string Password, string Role)
         {
+            this.Id = Id;
             this.Login = Login;
             this.Password = Password;
             this.Role = Role;
