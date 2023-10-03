@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class DeleteOnClick : MonoBehaviour
 {
-    void OnMouseDown()
+    private bool _isSelected = false;
+
+    public void MouseOnGameObeject()
     {
-        // Destroy the gameObject after clicking on it
-        Destroy(gameObject);
+        _isSelected = true;
+    }
+    public void MouseNotOnGameObeject()
+    {
+        _isSelected = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(1) && _isSelected)
+        {
+            Destroy(gameObject);
+        }
     }
 }

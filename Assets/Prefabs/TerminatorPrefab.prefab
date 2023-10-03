@@ -108,6 +108,38 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8390200039119078965}
+          m_TargetAssemblyTypeName: DeleteOnClick, Assembly-CSharp
+          m_MethodName: MouseOnGameObeject
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8390200039119078965}
+          m_TargetAssemblyTypeName: DeleteOnClick, Assembly-CSharp
+          m_MethodName: MouseNotOnGameObeject
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &5347710539894376965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7451b918c0ca47f4ab43e701baff8c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisObject: {fileID: 1934317893009574646}
 --- !u!61 &-7267850589166620291
 BoxCollider2D:
   m_ObjectHideFlags: 0
