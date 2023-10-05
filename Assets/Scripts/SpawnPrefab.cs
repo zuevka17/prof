@@ -11,6 +11,5 @@ public class SpawnPrefab : MonoBehaviour
     {
         Vector3 mouse = Input.mousePosition;
         Instantiate(_myPrefab, mouse, Quaternion.identity, _prefabParent.transform);
-
     }
 }
