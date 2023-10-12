@@ -9,9 +9,10 @@ public class LineDrawer : MonoBehaviour
     private Vector2 _mousePos;
     private Vector2 _startMousePos;
 
+    public GameObject connectPos;
     public GameObject startPos;
     private GameObject finishPos;
-    
+
     private bool canDrawLine = false;
     private bool isConnected = false;
     // Start is called before the first frame update
@@ -24,17 +25,24 @@ public class LineDrawer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButton(0) && canDrawLine && !isConnected)
+
+        if (Input.GetMouseButton(0) && canDrawLine && !isConnected)
         {
             _startMousePos = startPos.transform.position;
 
             _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _lineRend.SetPosition(0, new Vector2(_startMousePos.x, _startMousePos.y));
             _lineRend.SetPosition(1, new Vector2(_mousePos.x, _mousePos.y));
+            connectPos.SetActive(false);
         }
         if (Input.GetMouseButtonUp(0))
         {
+            _lineRend.SetPosition(0, new Vector2(_startMousePos.x, _startMousePos.y));
+            _lineRend.SetPosition(1, new Vector2(_startMousePos.x, _startMousePos.y));
+
             canDrawLine = false;
+
+            connectPos.SetActive(true);
         }
 
         if (isConnected)
@@ -47,11 +55,26 @@ public class LineDrawer : MonoBehaviour
     {
         canDrawLine = true;
     }
+    public void SetCanDrawToFalse()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            
+        }
+        else
+        {
+            canDrawLine = false;
+        }
+    }
     public void ConnectToBlockScheme(GameObject gameObj)
     {
-        _lineRend.SetPosition(1, gameObj.transform.position);
-        finishPos = gameObj;
-        canDrawLine = false;
-        isConnected = true;
+        if (canDrawLine)
+        {
+            _lineRend.SetPosition(1, gameObj.transform.position);
+            finishPos = gameObj;
+            canDrawLine = false;
+            isConnected = true;
+        }
     }
 }
+    
