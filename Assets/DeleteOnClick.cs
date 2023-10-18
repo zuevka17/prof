@@ -9,7 +9,7 @@ public class DeleteOnClick : MonoBehaviour
 
     private void Start()
     {
-        _test = GameObject.Find("Test").GetComponent<Test>();
+        _test = GameObject.Find("TestWithLists").GetComponent<Test>();
     }
     public void MouseOnGameObeject()
     {
@@ -24,8 +24,10 @@ public class DeleteOnClick : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && _isSelected)
         {
-            Debug.Log(gameObject.name);
-            _test.DeleteElement(gameObject);
+            gameObject.GetComponentInParent<LineDrawer>().previousConnection.GetComponent<LineDrawer>().isConnected = false;
+
+            Debug.Log(gameObject.transform.parent.name);
+            _test.DeleteElement(gameObject.transform.parent.gameObject);
             Destroy(gameObject);
             Destroy(transform.parent.gameObject);
         }

@@ -2132,7 +2132,7 @@ GameObject:
   - component: {fileID: 361263931}
   - component: {fileID: 361263930}
   m_Layer: 0
-  m_Name: Test
+  m_Name: TestWithLists
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12933,6 +12933,18 @@ PrefabInstance:
     - target: {fileID: 2981472565590744693, guid: fae4165da09894141bf0d466342a6757, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055228594640549398, guid: fae4165da09894141bf0d466342a6757, type: 3}
+      propertyPath: m_Parameters.colorGradient.atime2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055228594640549398, guid: fae4165da09894141bf0d466342a6757, type: 3}
+      propertyPath: m_Parameters.colorGradient.key2.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055228594640549398, guid: fae4165da09894141bf0d466342a6757, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_ColorSpace
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

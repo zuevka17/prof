@@ -26,9 +26,9 @@ public class Test : MonoBehaviour
         }
     }
 
-    public void AddToUserList(string FirstValue, string SecondValue)
+    public void AddToUserList(GameObject gameObj)
     {
-        UserString.Add($"{FirstValue} connected to {SecondValue}");
+        UserString.Add($"{gameObj.name}");
     }
     public void AddToTaskList(string FirstValue, string SecondValue)
     {

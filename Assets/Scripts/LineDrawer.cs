@@ -9,6 +9,8 @@ using Unity.VisualScripting;
 
 public class LineDrawer : MonoBehaviour
 {
+    public GameObject previousConnection;
+
     private Test _test;
     private LineRenderer _lineRend;
     private Vector2 _mousePos;
@@ -16,15 +18,15 @@ public class LineDrawer : MonoBehaviour
 
     public GameObject connectPos;
     public GameObject startPos;
-    private GameObject finishPos;
+    public GameObject finishPos;
 
     private bool canDrawLine = false;
-    private bool isConnected = false;
+    public bool isConnected = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        _test = GameObject.Find("Test").GetComponent<Test>();
+        _test = GameObject.Find("TestWithLists").GetComponent<Test>();
         _lineRend = GetComponent<LineRenderer>();
         _lineRend.positionCount = 2;
     }
@@ -75,11 +77,14 @@ public class LineDrawer : MonoBehaviour
     {
         if (canDrawLine && !isConnected)
         {
+            gameObj.GetComponentInParent<LineDrawer>().previousConnection = gameObject;
+
             _lineRend.SetPosition(1, gameObj.transform.position);
             finishPos = gameObj;
             canDrawLine = false;
             isConnected = true;
-            _test.AddToUserList(gameObject.name, gameObj.transform.parent.name);
+
+            _test.AddToUserList(gameObject);
             if (_test.TaskString.Equals(_test.UserString))
             {
                 Debug.Log("EQUAL");
