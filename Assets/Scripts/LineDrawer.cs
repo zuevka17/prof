@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Linq;
 using Unity.VisualScripting;
 
 public class LineDrawer : MonoBehaviour
 {
-
+    private Test _test;
     private LineRenderer _lineRend;
     private Vector2 _mousePos;
     private Vector2 _startMousePos;
@@ -23,6 +24,7 @@ public class LineDrawer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _test = GameObject.Find("Test").GetComponent<Test>();
         _lineRend = GetComponent<LineRenderer>();
         _lineRend.positionCount = 2;
     }
@@ -62,7 +64,7 @@ public class LineDrawer : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            
+
         }
         else
         {
@@ -71,13 +73,17 @@ public class LineDrawer : MonoBehaviour
     }
     public void ConnectToBlockScheme(GameObject gameObj)
     {
-        if (canDrawLine)
+        if (canDrawLine && !isConnected)
         {
             _lineRend.SetPosition(1, gameObj.transform.position);
             finishPos = gameObj;
             canDrawLine = false;
             isConnected = true;
+            _test.AddToUserList(gameObject.name, gameObj.transform.parent.name);
+            if (_test.TaskString.Equals(_test.UserString))
+            {
+                Debug.Log("EQUAL");
+            }
         }
     }
 }
-    
