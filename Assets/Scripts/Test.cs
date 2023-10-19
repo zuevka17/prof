@@ -6,17 +6,13 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
 
-    [SerializeField] public List<string> TaskString = new List<string>();
+    public List<GameObject> TaskString;
 
-    [SerializeField] public List<string> UserString;
-    private void Start()
+    public List<GameObject> UserString;
+    void Start()
     {
-        TaskString = new List<string>()
-        {
-            "Start(Clone) connected to If(Clone)",
-            "If(Clone) connected to For(Clone)",
-            "123"
-        };
+        TaskString = new List<GameObject>();
+        UserString = new List<GameObject>();
     }
     void Update()
     {
@@ -26,17 +22,21 @@ public class Test : MonoBehaviour
         }
     }
 
-    public void AddToUserList(GameObject gameObj)
+    public void AddToList(GameObject gameObj)
     {
-        UserString.Add($"{gameObj.name}");
+        if(GameObject.Find("DbConnect").GetComponent<DbConnect>().currentUser.Role == "Teacher")
+        {
+            TaskString.Add(gameObj);
+        }
+        else
+        {
+            UserString.Add(gameObj);
+        }
     }
-    public void AddToTaskList(string FirstValue, string SecondValue)
-    {
-        TaskString.Add($"{FirstValue} connected to {SecondValue}");
-    }
+
     public void DeleteElement(GameObject gameObj)
     {
-       UserString.RemoveAll(item => item == gameObj.name);
+        UserString.RemoveAll(item => item == gameObj);
     }
 
 }

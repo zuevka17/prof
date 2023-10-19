@@ -12,13 +12,13 @@ public class LineDrawer : MonoBehaviour
     public GameObject previousConnection;
 
     private Test _test;
-    private LineRenderer _lineRend;
+    public LineRenderer LineRend;
     private Vector2 _mousePos;
     private Vector2 _startMousePos;
 
-    public GameObject connectPos;
-    public GameObject startPos;
-    public GameObject finishPos;
+    [SerializeField] public GameObject connectPos;
+    [SerializeField] public GameObject startPos;
+    [SerializeField] public GameObject finishPos;
 
     private bool canDrawLine = false;
     public bool isConnected = false;
@@ -27,8 +27,8 @@ public class LineDrawer : MonoBehaviour
     void Start()
     {
         _test = GameObject.Find("TestWithLists").GetComponent<Test>();
-        _lineRend = GetComponent<LineRenderer>();
-        _lineRend.positionCount = 2;
+        LineRend = GetComponent<LineRenderer>();
+        LineRend.positionCount = 2;
     }
     // Update is called once per frame
     void Update()
@@ -38,14 +38,14 @@ public class LineDrawer : MonoBehaviour
         {
             _startMousePos = startPos.transform.position;
             _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _lineRend.SetPosition(0, new Vector2(_startMousePos.x, _startMousePos.y));
-            _lineRend.SetPosition(1, new Vector2(_mousePos.x, _mousePos.y));
+            LineRend.SetPosition(0, new Vector2(_startMousePos.x, _startMousePos.y));
+            LineRend.SetPosition(1, new Vector2(_mousePos.x, _mousePos.y));
             connectPos.SetActive(false);
         }
         if (Input.GetMouseButtonUp(0))
         {
-            _lineRend.SetPosition(0, new Vector2(_startMousePos.x, _startMousePos.y));
-            _lineRend.SetPosition(1, new Vector2(_startMousePos.x, _startMousePos.y));
+            LineRend.SetPosition(0, new Vector2(_startMousePos.x, _startMousePos.y));
+            LineRend.SetPosition(1, new Vector2(_startMousePos.x, _startMousePos.y));
 
             canDrawLine = false;
 
@@ -54,8 +54,8 @@ public class LineDrawer : MonoBehaviour
 
         if (isConnected)
         {
-            _lineRend.SetPosition(0, startPos.transform.position);
-            _lineRend.SetPosition(1, finishPos.transform.position);
+            LineRend.SetPosition(0, startPos.transform.position);
+            LineRend.SetPosition(1, finishPos.transform.position);
         }
     }
     public void SetCanDrawToTrue()
@@ -79,16 +79,12 @@ public class LineDrawer : MonoBehaviour
         {
             gameObj.GetComponentInParent<LineDrawer>().previousConnection = gameObject;
 
-            _lineRend.SetPosition(1, gameObj.transform.position);
+            LineRend.SetPosition(1, gameObj.transform.position);
             finishPos = gameObj;
             canDrawLine = false;
             isConnected = true;
 
-            _test.AddToUserList(gameObject);
-            if (_test.TaskString.Equals(_test.UserString))
-            {
-                Debug.Log("EQUAL");
-            }
+            _test.AddToList(gameObject);
         }
     }
 }
