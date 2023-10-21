@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
+using System;
+using TMPro;
 
 public class Test : MonoBehaviour
 {
+    [SerializeField] public string CreatedString = ""; 
 
     public List<GameObject> TaskString;
 
     public List<GameObject> UserString;
+
     void Start()
     {
         TaskString = new List<GameObject>();
@@ -24,9 +29,18 @@ public class Test : MonoBehaviour
 
     public void AddToList(GameObject gameObj)
     {
-        if(GameObject.Find("DbConnect").GetComponent<DbConnect>().currentUser.Role == "Teacher")
+
+        if (GameObject.Find("DbConnect").GetComponent<DbConnect>().currentUser.Role == "Teacher")
         {
-            TaskString.Add(gameObj);
+            if (TaskString.Any(x => x == null))
+            {
+                var firstNullValue = TaskString.FirstOrDefault(x => x == null);
+                TaskString[TaskString.IndexOf(firstNullValue)] = gameObj;
+            }
+            else
+            {
+                TaskString.Add(gameObj);
+            }
         }
         else
         {
@@ -36,7 +50,32 @@ public class Test : MonoBehaviour
 
     public void DeleteElement(GameObject gameObj)
     {
-        UserString.RemoveAll(item => item == gameObj);
+        if (GameObject.Find("DbConnect").GetComponent<DbConnect>().currentUser.Role == "Teacher")
+        {
+            var firstGameObjectValue = TaskString.FirstOrDefault(x => x == gameObj);
+            if (firstGameObjectValue != null)
+            {
+                if (TaskString.IndexOf(firstGameObjectValue) == 0)
+                {
+                    TaskString.Where(x => x == gameObj).ToList().ForEach(x => x = null);
+                }
+                else
+                {
+                    TaskString[TaskString.IndexOf(firstGameObjectValue) - 1] = null;
+                    TaskString[TaskString.IndexOf(firstGameObjectValue)] = null;
+                }
+            }
+        }
+        else
+        {
+            UserString.Where(x => x == gameObj).ToList().ForEach(x => x = null);
+        }
     }
-
+    public void Save()
+    {
+        foreach (var item in TaskString)
+        {
+            CreatedString += item.name + item.GetComponent<TMP_InputField>().text;
+        }
+    }
 }
