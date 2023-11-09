@@ -18,6 +18,9 @@ public class DbConnect : MonoBehaviour
     [SerializeField] private TMP_InputField _password;
     [SerializeField] private TMP_Dropdown _selectRole;
 
+    [Header("Create task input fields")]
+    [SerializeField] private TMP_InputField _taskDescription;
+
     [Header("Watched video fields")]
     public User currentUser;
 
@@ -87,7 +90,8 @@ public class DbConnect : MonoBehaviour
                         Debug.Log("No row inserted");
 
                     connection.Close();
-;                }
+                    ;
+                }
             }
         }
         catch (SqlException e)
@@ -116,6 +120,35 @@ public class DbConnect : MonoBehaviour
                         Debug.Log("Row inserted!!");
                     else
                         Debug.Log("No row inserted");
+
+                    connection.Close();
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Debug.Log(e.ToString());
+        }
+
+    }
+    public void SaveTaskListToDb()
+    {
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                Debug.Log("Inserting data into database...");
+                string SqlCom = "INSERT INTO Unity.dbo.BlockSchemas (task_serialized_list)\r\nVALUES(@list)";
+                using (SqlCommand command = new SqlCommand(SqlCom, connection))
+                {
+                    command.Parameters.Add("@list", SqlDbType.VarChar).Value = SaveBlockSchemes.SerializeList();
+
+                    int rowsAdded = command.ExecuteNonQuery();
+                    if (rowsAdded > 0)
+                        Debug.Log("Serialized list saved to DataBase");
+                    else
+                        Debug.Log("No serialized lists inserted");
 
                     connection.Close();
                 }

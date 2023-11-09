@@ -8,7 +8,7 @@ using TMPro;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] public string CreatedString = ""; 
+    [SerializeField] public string CreatedString = String.Empty; 
 
     public List<GameObject> TaskString;
 
@@ -73,6 +73,7 @@ public class Test : MonoBehaviour
     }
     public void Save()
     {
+        CreatedString = String.Empty;
         foreach (var item in TaskString)
         {
             CreatedString += item.name + item.GetComponent<TMP_InputField>().text;
