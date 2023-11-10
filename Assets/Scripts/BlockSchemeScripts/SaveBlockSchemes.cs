@@ -11,15 +11,17 @@ using Unity.VisualScripting;
 using System;
 using UnityEngine.Profiling;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using UnityEditorInternal.VersionControl;
+using TreeEditor;
 
 public class SaveBlockSchemes : MonoBehaviour
 {
+    static byte[] data;
     public GameObject parentObject;
 
     [SerializeField]public List<BlockScheme.BlockSchemeComponent> testList = new List<BlockScheme.BlockSchemeComponent>();
     public static List<BlockScheme.BlockSchemeComponent> blockSchemasList = new List<BlockScheme.BlockSchemeComponent>();
-
-    public static string serializeList;
     public void SaveToList()
     {
         blockSchemasList.Clear();
@@ -28,13 +30,23 @@ public class SaveBlockSchemes : MonoBehaviour
             blockSchemasList.Add(child.GetComponent<BlockScheme>().block);
         }
     }
-    public static string SerializeList()
+    public static byte[] SerializeList()
     {
-        serializeList = JsonConvert.SerializeObject(blockSchemasList);
-        return serializeList;
+        byte[] data;
+        var formatter = new BinaryFormatter();
+        using (var stream = new MemoryStream())
+        {
+            formatter.Serialize(stream, blockSchemasList);
+            data = stream.ToArray();
+        }
+        return data;
     }
     public static void Deserialize()
     {
-        GameObject.Find("Save").GetComponent<SaveBlockSchemes>().testList = (List<BlockScheme.BlockSchemeComponent>)JsonConvert.DeserializeObject(serializeList);
+        var formatter = new BinaryFormatter();
+        using (var stream = new MemoryStream(data))
+        {
+            blockSchemasList = (List<BlockScheme.BlockSchemeComponent>)formatter.Deserialize(stream);
+        }
     }
 }

@@ -9,7 +9,12 @@ public class DestroyBlockScheme : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            if (gameObject.GetComponent<BlockScheme>().block.ConnectedFrom != null)
+            if (gameObject.GetComponent<BlockScheme>().block.ConnectedFrom != null && gameObject.GetComponent<BlockScheme>().block.IsConnectedFormSecondPoint)
+            {
+                gameObject.GetComponent<BlockScheme>().block.ConnectedFrom.GetComponent<BlockScheme>().block.IsSecondConnected = false;
+                gameObject.GetComponent<BlockScheme>().block.ConnectedFrom.GetComponent<BlockScheme>().LineRendSecond.SetPosition(1, gameObject.GetComponent<BlockScheme>().block.ConnectedFrom.GetComponent<BlockScheme>().LineRendStartPosSecond);
+            }
+            else if(gameObject.GetComponent<BlockScheme>().block.ConnectedFrom != null)
             {
                 gameObject.GetComponent<BlockScheme>().block.ConnectedFrom.GetComponent<BlockScheme>().block.IsConnected = false;
                 gameObject.GetComponent<BlockScheme>().block.ConnectedFrom.GetComponent<BlockScheme>().LineRend.SetPosition(1, gameObject.GetComponent<BlockScheme>().block.ConnectedFrom.GetComponent<BlockScheme>().LineRendStartPos);

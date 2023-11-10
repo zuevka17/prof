@@ -142,7 +142,7 @@ public class DbConnect : MonoBehaviour
                 string SqlCom = "INSERT INTO Unity.dbo.BlockSchemas (task_serialized_list)\r\nVALUES(@list)";
                 using (SqlCommand command = new SqlCommand(SqlCom, connection))
                 {
-                    command.Parameters.Add("@list", SqlDbType.VarChar).Value = SaveBlockSchemes.SerializeList();
+                    command.Parameters.Add("@list", SqlDbType.VarBinary).Value = SaveBlockSchemes.SerializeList();
 
                     int rowsAdded = command.ExecuteNonQuery();
                     if (rowsAdded > 0)
