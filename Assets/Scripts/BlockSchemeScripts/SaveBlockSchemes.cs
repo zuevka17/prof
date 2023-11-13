@@ -14,39 +14,58 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEditorInternal.VersionControl;
 using TreeEditor;
+using System.Xml.Linq;
 
 public class SaveBlockSchemes : MonoBehaviour
 {
-    static byte[] data;
+    static public byte[] bytes;
     public GameObject parentObject;
 
-    [SerializeField]public List<BlockScheme.BlockSchemeComponent> testList = new List<BlockScheme.BlockSchemeComponent>();
-    public static List<BlockScheme.BlockSchemeComponent> blockSchemasList = new List<BlockScheme.BlockSchemeComponent>();
+    [SerializeField] private List<string> testList = new List<string>();
+    [SerializeField] private List<string> blockSchemasList = new List<string>();
     public void SaveToList()
     {
         blockSchemasList.Clear();
         foreach (Transform child in parentObject.transform)
         {
-            blockSchemasList.Add(child.GetComponent<BlockScheme>().block);
+            BlockScheme.BlockSchemeComponent block = child.GetComponent<BlockScheme>().block;
+            string type = block.Type;
+            string text = block.TextOnBlockScheme;
+            string connectedTo;
+            if (block.ConnectedTo == null)
+                connectedTo = "nothing";
+            else
+                connectedTo = block.ConnectedTo.name;
+            string connectedFrom;
+            if (block.ConnectedFrom == null)
+                connectedFrom = "nothing";
+            else
+                connectedFrom = block.ConnectedFrom.name;
+
+            if (child.GetComponent<BlockScheme>().block.Type == "If(Clone)")
+
+                blockSchemasList.Add($"{type} text: {text} connected to {connectedTo} and {block.ConnectedToSecond.name} connected from {connectedFrom}");
+            else
+                blockSchemasList.Add($"{type} text: {text} connected to {connectedTo} connected from {connectedFrom}");
         }
     }
-    public static byte[] SerializeList()
+    public static void ListToByteArray()
     {
-        byte[] data;
-        var formatter = new BinaryFormatter();
-        using (var stream = new MemoryStream())
+        BinaryFormatter bf = new BinaryFormatter();
+        using (var ms = new MemoryStream())
         {
-            formatter.Serialize(stream, blockSchemasList);
-            data = stream.ToArray();
+            bf.Serialize(ms, GameObject.Find("Save").GetComponent<SaveBlockSchemes>().blockSchemasList);
+            bytes = ms.ToArray();
         }
-        return data;
     }
-    public static void Deserialize()
+    public static void ByteArrayToObject()
     {
-        var formatter = new BinaryFormatter();
-        using (var stream = new MemoryStream(data))
+        using (var memStream = new MemoryStream())
         {
-            blockSchemasList = (List<BlockScheme.BlockSchemeComponent>)formatter.Deserialize(stream);
+            var binForm = new BinaryFormatter();
+            memStream.Write(bytes, 0, bytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            GameObject.Find("Save").GetComponent<SaveBlockSchemes>().testList = (List<string>)binForm.Deserialize(memStream);
         }
     }
 }

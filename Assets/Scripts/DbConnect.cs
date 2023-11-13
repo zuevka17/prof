@@ -131,7 +131,7 @@ public class DbConnect : MonoBehaviour
         }
 
     }
-    public void SaveTaskListToDb()
+    public void SaveTaskToDb()
     {
         try
         {
@@ -139,16 +139,18 @@ public class DbConnect : MonoBehaviour
             {
                 connection.Open();
                 Debug.Log("Inserting data into database...");
-                string SqlCom = "INSERT INTO Unity.dbo.BlockSchemas (task_serialized_list)\r\nVALUES(@list)";
+                string SqlCom = "INSERT INTO Unity.dbo.Tasks (teacher_id, description, serialized_list)\r\nVALUES(@TeacherId, @Description, @SerializedList)";
                 using (SqlCommand command = new SqlCommand(SqlCom, connection))
                 {
-                    command.Parameters.Add("@list", SqlDbType.VarBinary).Value = SaveBlockSchemes.SerializeList();
+                    command.Parameters.Add("@TeacherId", SqlDbType.VarChar).Value = currentUser.Id;
+                    command.Parameters.Add("@Description", SqlDbType.VarChar).Value = _taskDescription.text;
+                    command.Parameters.Add("@SerializedList", SqlDbType.VarBinary).Value = SaveBlockSchemes.bytes;
 
                     int rowsAdded = command.ExecuteNonQuery();
                     if (rowsAdded > 0)
-                        Debug.Log("Serialized list saved to DataBase");
+                        Debug.Log("Row inserted!!");
                     else
-                        Debug.Log("No serialized lists inserted");
+                        Debug.Log("No row inserted");
 
                     connection.Close();
                 }
@@ -158,6 +160,7 @@ public class DbConnect : MonoBehaviour
         {
             Debug.Log(e.ToString());
         }
+
     }
 
     public class User
