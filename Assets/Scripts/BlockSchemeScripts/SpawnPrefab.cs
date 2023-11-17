@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SpawnPrefab : MonoBehaviour
 {
-    [SerializeField]private GameObject Prefab;
-    [SerializeField]private GameObject ParentObject;
+    [SerializeField] private GameObject Prefab;
+    [SerializeField] private GameObject ParentObject;
     public void SpawnPref()
     {
         Vector3 SpawnPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

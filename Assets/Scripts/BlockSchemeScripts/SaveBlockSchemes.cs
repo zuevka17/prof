@@ -21,8 +21,7 @@ public class SaveBlockSchemes : MonoBehaviour
     static public byte[] bytes;
     public GameObject parentObject;
 
-    [SerializeField] private List<string> testList = new List<string>();
-    [SerializeField] private List<string> blockSchemasList = new List<string>();
+    public List<string> blockSchemasList = new List<string>();
     public void SaveToList()
     {
         blockSchemasList.Clear();
@@ -56,16 +55,6 @@ public class SaveBlockSchemes : MonoBehaviour
         {
             bf.Serialize(ms, GameObject.Find("Save").GetComponent<SaveBlockSchemes>().blockSchemasList);
             bytes = ms.ToArray();
-        }
-    }
-    public static void ByteArrayToObject()
-    {
-        using (var memStream = new MemoryStream())
-        {
-            var binForm = new BinaryFormatter();
-            memStream.Write(bytes, 0, bytes.Length);
-            memStream.Seek(0, SeekOrigin.Begin);
-            GameObject.Find("Save").GetComponent<SaveBlockSchemes>().testList = (List<string>)binForm.Deserialize(memStream);
         }
     }
 }

@@ -179,8 +179,8 @@ public class BlockScheme : MonoBehaviour
             Finpos = gameObj.GetComponent<BlockScheme>().block.ConnectionPos;
 
             gameObj.GetComponent<BlockScheme>().block.ConnectedFrom = gameObject;
+            gameObj.GetComponent<BlockScheme>().block.OrderInHierarchy = gameObject.GetComponent<BlockScheme>().block.OrderInHierarchy + 1;
             gameObject.GetComponent<BlockScheme>().block.ConnectedTo = gameObj;
-            gameObject.GetComponent<BlockScheme>().block.OrderInHierarchy = this.block.OrderInHierarchy++;
 
             _canDrawLine = false;
             block.IsConnected = true;
@@ -192,8 +192,8 @@ public class BlockScheme : MonoBehaviour
             FinposSecond = gameObj.GetComponent<BlockScheme>().block.ConnectionPos;
 
             gameObj.GetComponent<BlockScheme>().block.ConnectedFrom = gameObject;
+            gameObj.GetComponent<BlockScheme>().block.OrderInHierarchy = gameObject.GetComponent<BlockScheme>().block.OrderInHierarchy + 1;
             gameObject.GetComponent<BlockScheme>().block.ConnectedToSecond = gameObj;
-            gameObject.GetComponent<BlockScheme>().block.OrderInHierarchy = this.block.OrderInHierarchy++;
 
             _canDrawSecondLine = false;
             block.IsSecondConnected = true;

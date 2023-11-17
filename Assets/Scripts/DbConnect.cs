@@ -162,6 +162,36 @@ public class DbConnect : MonoBehaviour
         }
 
     }
+    public void GetTeacherTask()
+    {
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                string SqlCom = "SELECT TOP 1 description, serialized_list\r\nFROM Unity.dbo.Tasks\r\nORDER BY NEWID();";
+                using (SqlCommand command = new SqlCommand(SqlCom, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(0) & !reader.IsDBNull(1))
+                            {
+                                SelectRandomTask taskFromDb = GameObject.Find("TaskFromDb").GetComponent<SelectRandomTask>();
+                                taskFromDb.textField.text = reader.GetString(0);
+                                taskFromDb.dbStrings = SelectRandomTask.ByteArrayToObject((byte[])reader.GetValue(1));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Debug.Log(e.ToString());
+        }
+    }
 
     public class User
     {
