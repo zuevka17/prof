@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 using System;
 using UnityEngine.Profiling;
 using Newtonsoft.Json;
@@ -15,6 +16,8 @@ using Newtonsoft.Json.Linq;
 using UnityEditorInternal.VersionControl;
 using TreeEditor;
 using System.Xml.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 
 public class SaveBlockSchemes : MonoBehaviour
 {
@@ -22,28 +25,45 @@ public class SaveBlockSchemes : MonoBehaviour
     public GameObject parentObject;
 
     public List<string> blockSchemasList = new List<string>();
+    public List<BlockScheme.BlockSchemeComponent> blockSchemas = new List<BlockScheme.BlockSchemeComponent>();
     public void SaveToList()
     {
         blockSchemasList.Clear();
+        blockSchemas.Clear();
+
         foreach (Transform child in parentObject.transform)
         {
-            BlockScheme.BlockSchemeComponent block = child.GetComponent<BlockScheme>().block;
-            string type = block.Type;
-            string text = block.TextOnBlockScheme;
+            BlockScheme.BlockSchemeComponent childBlock = child.GetComponent<BlockScheme>().block;
+            if (childBlock.Type != "StartEnd(Clone)" && (childBlock.ConnectedFrom == null || childBlock.Type != "StartEnd(Clone)" && childBlock.ConnectedTo == null))
+            {
+                Debug.Log("Найдет объект без цепи.");
+            }
+            else
+            {
+                blockSchemas.Add(childBlock);
+            }
+        }
+
+        blockSchemas = blockSchemas.OrderBy(x => x.OrderInHierarchy).ToList();
+
+        foreach (var child in blockSchemas)
+        {
+            string type = child.Type;
+            string text = child.TextOnBlockScheme;
             string connectedTo;
-            if (block.ConnectedTo == null)
+            if (child.ConnectedTo == null)
                 connectedTo = "nothing";
             else
-                connectedTo = block.ConnectedTo.name;
+                connectedTo = child.ConnectedTo.name;   
             string connectedFrom;
-            if (block.ConnectedFrom == null)
+            if (child.ConnectedFrom == null)
                 connectedFrom = "nothing";
             else
-                connectedFrom = block.ConnectedFrom.name;
+                connectedFrom = child.ConnectedFrom.name;
 
-            if (child.GetComponent<BlockScheme>().block.Type == "If(Clone)")
+            if (child.Type == "If(Clone)")
 
-                blockSchemasList.Add($"{type} text: {text} connected to {connectedTo} and {block.ConnectedToSecond.name} connected from {connectedFrom}");
+                blockSchemasList.Add($"{type} text: {text} connected to {connectedTo} and {child.ConnectedToSecond.name} connected from {connectedFrom}");
             else
                 blockSchemasList.Add($"{type} text: {text} connected to {connectedTo} connected from {connectedFrom}");
         }

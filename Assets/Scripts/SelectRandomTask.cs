@@ -22,11 +22,4 @@ public class SelectRandomTask : MonoBehaviour
             return (List<string>)binForm.Deserialize(memStream);
         }
     }
-    void Update()
-    {
-        if (Enumerable.SequenceEqual(GameObject.Find("SaveTest").GetComponent<SaveBlockSchemes>().blockSchemasList, dbStrings))
-        {
-            Debug.Log("EQUAL!!!");
-        }
-    }
 }
