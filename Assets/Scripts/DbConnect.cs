@@ -59,6 +59,7 @@ public class DbConnect : MonoBehaviour
                         }
                     }
                 }
+                connection.Close();
             }
         }
         catch (SqlException e)
@@ -192,7 +193,6 @@ public class DbConnect : MonoBehaviour
             Debug.Log(e.ToString());
         }
     }
-
     public class User
     {
         public int Id { get; set; }
