@@ -163,14 +163,23 @@ public class DbConnect : MonoBehaviour
         }
 
     }
-    public void GetTeacherTask()
+    public void GetTeacherTask(bool isControllTest)
     {
+        GameObject.Find("TaskFromDb").GetComponent<SelectRandomTask>().descriptions.Clear();
+        GameObject.Find("TaskFromDb").GetComponent<SelectRandomTask>().dbListsForControllTest.Clear();
         try
         {
             using (SqlConnection connection = new SqlConnection(con))
             {
                 connection.Open();
-                string SqlCom = "SELECT TOP 1 description, serialized_list\r\nFROM Unity.dbo.Tasks\r\nORDER BY NEWID();";
+
+                string SqlCom;
+
+                if (isControllTest)
+                    SqlCom = "SELECT TOP 10 description, serialized_list\r\nFROM Unity.dbo.Tasks\r\nORDER BY NEWID();";
+                else
+                    SqlCom = "SELECT TOP 1 description, serialized_list\r\nFROM Unity.dbo.Tasks\r\nORDER BY NEWID();";
+
                 using (SqlCommand command = new SqlCommand(SqlCom, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -180,8 +189,17 @@ public class DbConnect : MonoBehaviour
                             if (!reader.IsDBNull(0) & !reader.IsDBNull(1))
                             {
                                 SelectRandomTask taskFromDb = GameObject.Find("TaskFromDb").GetComponent<SelectRandomTask>();
-                                taskFromDb.textField.text = reader.GetString(0);
-                                taskFromDb.dbStrings = SelectRandomTask.ByteArrayToObject((byte[])reader.GetValue(1));
+                                if (isControllTest)
+                                {
+                                    taskFromDb.descriptions.Add(reader.GetString(0));
+                                    List<string> listToAdd = SelectRandomTask.ByteArrayToObject((byte[])reader.GetValue(1));
+                                    taskFromDb.dbListsForControllTest.Add(listToAdd);
+                                }
+                                else
+                                {
+                                    taskFromDb.textField.text = reader.GetString(0);
+                                    taskFromDb.dbStrings = SelectRandomTask.ByteArrayToObject((byte[])reader.GetValue(1));
+                                }
                             }
                         }
                     }

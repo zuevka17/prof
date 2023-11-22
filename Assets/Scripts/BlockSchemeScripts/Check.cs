@@ -5,10 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Check : MonoBehaviour
 {
-
-    private static bool check1()
+    [SerializeField]private GameObject nextTaskButton;
+    private static bool check1(bool isControlTest)
     {
-        foreach (Transform child in GameObject.Find("SaveTest").GetComponent<SaveBlockSchemes>().parentObject.transform)
+        Transform parentObj;
+
+        if(isControlTest)
+            parentObj = GameObject.Find("SaveControlTest").GetComponent<SaveBlockSchemes>().parentObject.transform;
+        else
+            parentObj = GameObject.Find("SaveTest").GetComponent<SaveBlockSchemes>().parentObject.transform;
+
+        foreach (Transform child in parentObj)
         {
             BlockScheme.BlockSchemeComponent childBlock = child.GetComponent<BlockScheme>().block;
             if (childBlock.Type != "StartEnd(Clone)" && (childBlock.ConnectedFrom == null || childBlock.Type != "StartEnd(Clone)" && childBlock.ConnectedTo == null))
@@ -19,12 +26,17 @@ public class Check : MonoBehaviour
         }
         return true;
     }
-    private static void check2()
+    private static void check2(bool isControlTest)
     {
         int count = 0;
 
-        List<string> studentList = GameObject.Find("SaveTest").GetComponent<SaveBlockSchemes>().blockSchemasList;
+        List<string> studentList;
         List<string> teacherList = GameObject.Find("TaskFromDb").GetComponent<SelectRandomTask>().dbStrings;
+
+        if(isControlTest)
+            studentList = GameObject.Find("SaveControlTest").GetComponent<SaveBlockSchemes>().blockSchemasList;
+        else
+            studentList = GameObject.Find("SaveTest").GetComponent<SaveBlockSchemes>().blockSchemasList;
 
         List<string> temp = new List<string>();
         if(studentList.Count != teacherList.Count)
@@ -70,16 +82,18 @@ public class Check : MonoBehaviour
         if (count == teacherList.Count)
         {
             Debug.Log("Задание решено верно!");
+            if (isControlTest)
+                GameObject.Find("CheckHolder").GetComponent<Check>().nextTaskButton.SetActive(true);
         }
         else
         {
             Debug.Log("Проверка. Этап 2 НЕ пройден.");
-        }
+        }   
     }
-    public static void CheckForMistakes()
+    public static void CheckForMistakes(bool isControlTest)
     {
-        if(check1())
-            check2();
+        if(check1(isControlTest))
+            check2(isControlTest);
     }
 
 }

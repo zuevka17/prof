@@ -9,8 +9,14 @@ using System.Linq;
 
 public class SelectRandomTask : MonoBehaviour
 {
-    [SerializeField] public TMP_Text textField;
+    //дл€ тренировки
+    public TMP_Text textField;
     public List<string> dbStrings = new List<string>();
+
+    //ƒл€ контрольного тестировани€
+    public TMP_Text textFieldControlTest;
+    public List<List<string>> dbListsForControllTest = new List<List<string>>();
+    public List<string> descriptions = new List<string>();
 
     public static List<string> ByteArrayToObject(byte[] bytes)
     {
