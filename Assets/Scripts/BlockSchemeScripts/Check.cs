@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Check : MonoBehaviour
 {
     [SerializeField]private GameObject nextTaskButton;
+    public static int controlTestCorrectAnswers = 0;
+    public static int controlTestWrongAnswers = 0;
     private static bool check1(bool isControlTest)
     {
         Transform parentObj;
@@ -28,7 +30,7 @@ public class Check : MonoBehaviour
     }
     private static void check2(bool isControlTest)
     {
-        int count = 0;
+        int correctAnswersCount = 0;
 
         List<string> studentList;
         List<string> teacherList = GameObject.Find("TaskFromDb").GetComponent<SelectRandomTask>().dbStrings;
@@ -58,7 +60,7 @@ public class Check : MonoBehaviour
                 UnityEngine.UI.Image currentImage = currentGO.transform.Find("InputFieldOnBlockScheme").transform.Find("BlockScheme").gameObject.GetComponent<UnityEngine.UI.Image>();
                 currentImage.color = new Color32(93, 226, 104, 255);
                 Debug.Log($"Элементы под номером {i} равны");
-                count++;
+                correctAnswersCount++;
             }
             else
             {
@@ -79,16 +81,25 @@ public class Check : MonoBehaviour
             GameObject.Find(temp[i]).name = studentList[i].Substring(0, studentList[i].IndexOf(" "));  
         }
 
-        if (count == teacherList.Count)
+        if (correctAnswersCount == teacherList.Count)
         {
             Debug.Log("Задание решено верно!");
             if (isControlTest)
+            {
                 GameObject.Find("CheckHolder").GetComponent<Check>().nextTaskButton.SetActive(true);
+                controlTestCorrectAnswers++;
+            }
+                
         }
         else
         {
             Debug.Log("Проверка. Этап 2 НЕ пройден.");
-        }   
+            if (isControlTest)
+            {
+                GameObject.Find("CheckHolder").GetComponent<Check>().nextTaskButton.SetActive(true);
+                controlTestWrongAnswers++;
+            }
+        }
     }
     public static void CheckForMistakes(bool isControlTest)
     {

@@ -1072,9 +1072,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 401374835}
-        m_TargetAssemblyTypeName: SaveBlockSchemes, Assembly-CSharp
-        m_MethodName: SaveToList
+      - m_Target: {fileID: 683384868}
+        m_TargetAssemblyTypeName: ControlTest, Assembly-CSharp
+        m_MethodName: ControlTestSelectTask
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1084,9 +1084,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1224645792}
-        m_TargetAssemblyTypeName: Check, Assembly-CSharp
-        m_MethodName: CheckForMistakes
+      - m_Target: {fileID: 171376462}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1094,7 +1094,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &171376465
 MonoBehaviour:
@@ -4305,8 +4305,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 915209337}
   m_HandleRect: {fileID: 915209336}
   m_Direction: 2
-  m_Value: -0.00000013214671
-  m_Size: 0.63550484
+  m_Value: 0.00000039644024
+  m_Size: 0.6355049
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5069,8 +5069,8 @@ RectTransform:
   - {fileID: 1950132517}
   - {fileID: 2018185157}
   - {fileID: 2061259794}
-  - {fileID: 171376463}
   - {fileID: 1177450073}
+  - {fileID: 171376463}
   m_Father: {fileID: 521774910}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5111,7 +5111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1140b5ffbbf14bf44b3fb0169509f3ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  workspace: {fileID: 1177450073}
+  workspace: {fileID: 1177450072}
 --- !u!1 &702944179
 GameObject:
   m_ObjectHideFlags: 0
@@ -13846,7 +13846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -14.804424, y: 230.9371}
+  m_AnchoredPosition: {x: -14.804424, y: 230.93695}
   m_SizeDelta: {x: 14.8039, y: 633.5806}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1604211276
